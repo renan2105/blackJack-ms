@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bj-config-server" />
+        <module name="bj-eureka-server" />
+        <module name="bj-user" />
+        <module name="bj-oauth" />
+        <module name="bj-partida" />
+        <module name="bj-api-gateway-zuul" />
+        <module name="bj-admin" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bj-admin" options="-parameters" />
+      <module name="bj-api-gateway-zuul" options="-parameters" />
+      <module name="bj-config-server" options="-parameters" />
+      <module name="bj-eureka-server" options="-parameters" />
+      <module name="bj-oauth" options="-parameters" />
+      <module name="bj-partida" options="-parameters" />
+      <module name="bj-user" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -2,7 +2,7 @@
 Jogo "Black Jack" ou "21" com linguagem java e springboot em uma estrutura basica de microserviços.<br />
 
 # Tecnologias
-Java<br />
+Java 11<br />
 Estrutura de microserviços<br />
 Rest<br />
 Springboot - starter web, config server, actuator<br />
