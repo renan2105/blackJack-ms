@@ -12,9 +12,11 @@
         <module name="bj-oauth" />
         <module name="bj-partida" />
         <module name="bj-api-gateway-zuul" />
-        <module name="bj-admin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bj-admin" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

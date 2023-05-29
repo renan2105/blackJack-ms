@@ -17,8 +17,6 @@ public class User implements UserDetails, Serializable {
 
     private String name;
 
-    private String email;
-
     private String password;
 
     Set<Role> roles = new HashSet<>();
@@ -27,10 +25,9 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(Long id, String name, String email, String password) {
+    public User(Long id, String name, String password) {
         this.id = id;
         this.name = name;
-        this.email = email;
         this.password = password;
     }
 
@@ -49,14 +46,6 @@ public class User implements UserDetails, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -80,7 +69,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return email;
+        return name;
     }
 
     @Override

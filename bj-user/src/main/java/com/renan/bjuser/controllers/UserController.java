@@ -22,9 +22,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/search")
-    public ResponseEntity<User> findUserByEmail(@RequestParam String email){
+    public ResponseEntity<User> findUserByName(@RequestParam String name){
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByName(name);
         return ResponseEntity.ok(user);
     }
 
