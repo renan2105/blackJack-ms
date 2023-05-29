@@ -12,6 +12,7 @@
         <module name="bj-oauth" />
         <module name="bj-partida" />
         <module name="bj-api-gateway-zuul" />
+        <module name="bj-carta" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bj-admin" options="-parameters" />
       <module name="bj-api-gateway-zuul" options="-parameters" />
+      <module name="bj-carta" options="-parameters" />
       <module name="bj-config-server" options="-parameters" />
       <module name="bj-eureka-server" options="-parameters" />
       <module name="bj-oauth" options="-parameters" />

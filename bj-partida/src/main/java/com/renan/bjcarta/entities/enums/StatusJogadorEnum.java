@@ -1,4 +1,4 @@
-package com.renan.bjpartida.entities.enums;
+package com.renan.bjcarta.entities.enums;
 
 public enum StatusJogadorEnum {
 

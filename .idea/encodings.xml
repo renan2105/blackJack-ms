@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/bj-admin/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bj-api-gateway-zuul/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bj-api-gateway-zuul/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bj-carta/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bj-carta/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bj-config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bj-config-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bj-eureka-server/src/main/java" charset="UTF-8" />

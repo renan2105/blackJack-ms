@@ -1,6 +1,6 @@
-package com.renan.bjpartida.entities;
+package com.renan.bjcarta.entities;
 
-import com.renan.bjpartida.entities.enums.NaipeCartaEnum;
+import com.renan.bjcarta.entities.enums.NaipeCartaEnum;
 
 public class Carta {
 

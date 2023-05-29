@@ -1,6 +1,6 @@
-package com.renan.bjpartida.entities;
+package com.renan.bjcarta.entities;
 
-import com.renan.bjpartida.entities.enums.StatusPartidaEnum;
+import com.renan.bjcarta.entities.enums.StatusPartidaEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.renan.bjpartida;
+package com.renan.bjcarta;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @SpringBootApplication
-public class BjPartidaApplication {
+public class BjCartaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BjPartidaApplication.class, args);
+		SpringApplication.run(BjCartaApplication.class, args);
 	}
 
 }

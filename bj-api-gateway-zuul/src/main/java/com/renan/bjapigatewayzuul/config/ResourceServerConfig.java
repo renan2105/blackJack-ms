@@ -29,7 +29,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] JOGADOR = {"/bj-partida/**"};
 
-    private static final String[] ADMIN = {"/bj-user/**", "/actuator/**", "/bj-oauth/actuator/**"};
+    private static final String[] ADMIN = {"/bj-user/**","/bj-carta/**", "/actuator/**", "/bj-oauth/actuator/**"};
 
 
     @Override

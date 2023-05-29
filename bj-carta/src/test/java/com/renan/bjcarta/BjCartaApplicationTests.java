@@ -1,10 +1,10 @@
-package com.renan.bjpartida;
+package com.renan.bjcarta;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BjPartidaApplicationTests {
+class BjCartaApplicationTests {
 
 	@Test
 	void contextLoads() {

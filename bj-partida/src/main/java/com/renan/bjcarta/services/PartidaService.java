@@ -1,16 +1,12 @@
-package com.renan.bjpartida.services;
+package com.renan.bjcarta.services;
 
-import com.renan.bjpartida.entities.Carta;
-import com.renan.bjpartida.entities.Jogador;
-import com.renan.bjpartida.entities.Partida;
-import com.renan.bjpartida.entities.enums.StatusJogadorEnum;
-import com.renan.bjpartida.entities.enums.StatusPartidaEnum;
-import com.renan.bjpartida.repositories.PartidaRepository;
+import com.renan.bjcarta.entities.Jogador;
+import com.renan.bjcarta.entities.enums.StatusJogadorEnum;
+import com.renan.bjcarta.repositories.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,19 +28,19 @@ public class PartidaService {
 //                )
 //
 //    }
-//
-//    public List<Jogador> criaJogadores(List<String> nomeJogadores){
-//
-//        List<Jogador> jogadores = new ArrayList<>();
-//
-//        nomeJogadores.forEach(jogador-> jogadores.add(new Jogador(jogador,
-//                0,
-//                new ArrayList<>(),
-//                StatusJogadorEnum.JOGANDO)));
-//
-//        return jogadores;
-//    }
-//
+
+    public List<Jogador> criaJogadores(List<String> nomeJogadores){
+
+        List<Jogador> jogadores = new ArrayList<>();
+
+        nomeJogadores.forEach(jogador-> jogadores.add(new Jogador(jogador,
+                0,
+                new ArrayList<>(),
+                StatusJogadorEnum.JOGANDO)));
+
+        return jogadores;
+    }
+
 //    private List<Carta> criaBaralho(){
 //
 //        List<Carta> baralho = new ArrayList<>();
