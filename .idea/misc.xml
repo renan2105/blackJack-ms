@@ -24,6 +24,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/bj-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/bj-carta/pom.xml" />
       </set>
     </option>
   </component>

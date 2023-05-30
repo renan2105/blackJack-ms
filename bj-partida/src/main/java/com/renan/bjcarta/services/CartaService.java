@@ -3,9 +3,10 @@ package com.renan.bjcarta.services;
 import com.renan.bjcarta.entities.Carta;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CartaService {
 
-    List<Carta> listarTodasCartas();
+    Set<Carta> listarTodasCartas();
 
 }

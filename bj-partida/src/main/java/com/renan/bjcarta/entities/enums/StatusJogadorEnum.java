@@ -2,9 +2,9 @@ package com.renan.bjcarta.entities.enums;
 
 public enum StatusJogadorEnum {
 
-    JOGANDO(1),
-    PAROU(2),
-    ULTRAPASSOU(3);
+    JOGANDO(0),
+    PAROU(1),
+    ULTRAPASSOU(2);
 
 
     private int codigo;

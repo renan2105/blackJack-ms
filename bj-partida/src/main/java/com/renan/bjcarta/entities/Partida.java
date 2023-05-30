@@ -2,15 +2,16 @@ package com.renan.bjcarta.entities;
 
 import com.renan.bjcarta.entities.enums.StatusPartidaEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name= "tb_partida")
 public class Partida implements Serializable {
+    private static final long SerialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +19,31 @@ public class Partida implements Serializable {
 
     private Integer rodada;
 
-    private List<Jogador> jogadores;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_partida_jogador",
+            joinColumns = @JoinColumn(name = "partida_id"),
+            inverseJoinColumns = @JoinColumn(name = "jogador_id")
+    )
+    Set<Jogador> jogadores = new HashSet<>();
+    
     private StatusPartidaEnum status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jogador_id")
     private Jogador vencedor;
 
-    private List<Carta> baralho;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_partida_carta",
+            joinColumns = @JoinColumn(name = "partida_id"),
+            inverseJoinColumns = @JoinColumn(name = "carta_id")
+    )
+    Set<Carta> baralho = new HashSet<>();
 
 
     public Partida() {
     }
 
-    public Partida(Long id, Integer rodada, List<Jogador> jogadores, StatusPartidaEnum status, Jogador vencedor, List<Carta> baralho) {
+    public Partida(Long id, Integer rodada, Set<Jogador> jogadores, StatusPartidaEnum status, Jogador vencedor, Set<Carta> baralho) {
         this.id = id;
         this.rodada = rodada;
         this.jogadores = jogadores;
@@ -56,11 +69,11 @@ public class Partida implements Serializable {
         this.rodada = rodada;
     }
 
-    public List<Jogador> getJogadores() {
+    public Set<Jogador> getJogadores() {
         return jogadores;
     }
 
-    public void setJogadores(List<Jogador> jogadores) {
+    public void setJogadores(Set<Jogador> jogadores) {
         this.jogadores = jogadores;
     }
 
@@ -80,11 +93,11 @@ public class Partida implements Serializable {
         this.vencedor = vencedor;
     }
 
-    public List<Carta> getBaralho() {
+    public Set<Carta> getBaralho() {
         return baralho;
     }
 
-    public void setBaralho(List<Carta> baralho) {
+    public void setBaralho(Set<Carta> baralho) {
         this.baralho = baralho;
     }
 }

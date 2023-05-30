@@ -2,10 +2,10 @@ package com.renan.bjcarta.entities.enums;
 
 public enum NaipeCartaEnum {
 
-    ESPADAS(1),
-    PAUS(2),
-    COPAS(3),
-    OUROS(4);
+    ESPADAS(0),
+    PAUS(1),
+    COPAS(2),
+    OUROS(3);
 
 
     private int codigo;

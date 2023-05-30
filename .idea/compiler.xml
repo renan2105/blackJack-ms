@@ -12,11 +12,13 @@
         <module name="bj-oauth" />
         <module name="bj-partida" />
         <module name="bj-api-gateway-zuul" />
-        <module name="bj-carta" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bj-admin" target="11" />
+      <module name="bj-carta" target="11" />
+      <module name="bj-entities-repositories" target="11" />
+      <module name="bj-jogador" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -2,7 +2,17 @@ package com.renan.bjcarta.entities;
 
 import com.renan.bjcarta.entities.enums.NaipeCartaEnum;
 
-public class Carta {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name= "tb_carta")
+public class Carta implements Serializable {
+    private static final long SerialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nome;
 
@@ -11,7 +21,8 @@ public class Carta {
     private Integer pontos;
 
 
-    public Carta(String nome, NaipeCartaEnum naipe, Integer pontos) {
+    public Carta(Long id, String nome, NaipeCartaEnum naipe, Integer pontos) {
+        this.id = id;
         this.nome = nome;
         this.naipe = naipe;
         this.pontos = pontos;
@@ -20,6 +31,14 @@ public class Carta {
     public Carta() {
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

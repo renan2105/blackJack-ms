@@ -2,15 +2,30 @@ package com.renan.bjcarta.entities;
 
 import com.renan.bjcarta.entities.enums.StatusJogadorEnum;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Jogador {
+@Entity
+@Table(name= "tb_jogador")
+public class Jogador implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nome;
 
     private Integer pontuacao;
 
-    private List<Carta> cartas;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_jogador_carta",
+            joinColumns = @JoinColumn(name = "jogador_id"),
+            inverseJoinColumns = @JoinColumn(name = "carta_id")
+    )
+    Set<Carta> cartas = new HashSet<>();
 
     private StatusJogadorEnum status;
 
@@ -18,13 +33,22 @@ public class Jogador {
     public Jogador() {
     }
 
-    public Jogador( String nome, Integer pontuacao, List<Carta> cartas, StatusJogadorEnum status) {
+    public Jogador(Long id, String nome, Integer pontuacao, Set<Carta> cartas, StatusJogadorEnum status) {
+        this.id = id;
         this.nome = nome;
         this.pontuacao = pontuacao;
         this.cartas = cartas;
         this.status = status;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -42,11 +66,11 @@ public class Jogador {
         this.pontuacao = pontuacao;
     }
 
-    public List<Carta> getCartas() {
+    public Set<Carta> getCartas() {
         return cartas;
     }
 
-    public void setCartas(List<Carta> cartas) {
+    public void setCartas(Set<Carta> cartas) {
         this.cartas = cartas;
     }
 
