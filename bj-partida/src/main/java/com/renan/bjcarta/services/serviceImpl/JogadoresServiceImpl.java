@@ -29,6 +29,7 @@ public class JogadoresServiceImpl implements JogadorService {
                 Jogador jogador = new Jogador(null,
                         nomeJogador,
                         0,
+                        0,
                         new HashSet<>(),
                         StatusJogadorEnum.JOGANDO);
 

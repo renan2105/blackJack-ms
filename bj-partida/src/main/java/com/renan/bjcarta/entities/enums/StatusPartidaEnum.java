@@ -3,7 +3,9 @@ package com.renan.bjcarta.entities.enums;
 public enum StatusPartidaEnum {
 
     PROGRESSO(0),
-    FINALIZADO(1);
+    EMPATE(1),
+    DERROTA(2),
+    FINALIZADO(3);
 
 
     private int codigo;

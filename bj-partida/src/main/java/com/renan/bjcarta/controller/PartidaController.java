@@ -1,5 +1,6 @@
 package com.renan.bjcarta.controller;
 
+import com.renan.bjcarta.dto.PartidaDTO;
 import com.renan.bjcarta.entities.Partida;
 import com.renan.bjcarta.services.PartidaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,22 @@ public class PartidaController {
 
         Partida partida = partidaService.iniciaPartida(nomePrimeiroJogador, nomeSegundoJogador, nomeTerceiroJogador, nomeQuartoJogador);
         return ResponseEntity.ok(partida);
+    }
+
+    @RequestMapping(value = "/buscaPartida/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Partida> iniciaPartida(@PathVariable(value = "id") Long id){
+
+        Partida partida = partidaService.buscaPartida(id);
+        return ResponseEntity.ok(partida);
+    }
+
+    @RequestMapping(value = "/puxaCarta/{partidaId}/{jogadorId}", method = RequestMethod.GET)
+    public ResponseEntity<PartidaDTO> puxaCarta(@PathVariable(value = "partidaId") Long partidaId,
+                                                 @PathVariable(value = "jogadorId") Long jogadorId,
+                                                @RequestParam(required = false, value = "parou") Boolean parou){
+
+        PartidaDTO partidaDTO = partidaService.puxaCarta(partidaId, jogadorId, parou);
+        return ResponseEntity.ok(partidaDTO);
     }
 
 }

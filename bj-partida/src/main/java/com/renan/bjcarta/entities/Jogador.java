@@ -20,6 +20,8 @@ public class Jogador implements Serializable {
 
     private Integer pontuacao;
 
+    private Integer rodada;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_jogador_carta",
             joinColumns = @JoinColumn(name = "jogador_id"),
@@ -33,10 +35,11 @@ public class Jogador implements Serializable {
     public Jogador() {
     }
 
-    public Jogador(Long id, String nome, Integer pontuacao, Set<Carta> cartas, StatusJogadorEnum status) {
+    public Jogador(Long id, String nome, Integer pontuacao, Integer rodada, Set<Carta> cartas, StatusJogadorEnum status) {
         this.id = id;
         this.nome = nome;
         this.pontuacao = pontuacao;
+        this.rodada = rodada;
         this.cartas = cartas;
         this.status = status;
     }
@@ -64,6 +67,14 @@ public class Jogador implements Serializable {
 
     public void setPontuacao(Integer pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public Integer getRodada() {
+        return rodada;
+    }
+
+    public void setRodada(Integer rodada) {
+        this.rodada = rodada;
     }
 
     public Set<Carta> getCartas() {
