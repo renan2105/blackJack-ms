@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "53d42caa-1824-406e-96f6-b1916bdd823c",
+		"name": "BlackJack-ms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14822826"
+	},
+	"item": [
+		{
+			"name": "hr-oauth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    postman.setEnvironmentVariable('token', json.access_token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{client-secret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{client-name}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api-gateway}}/bj-oauth/oauth/token",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-oauth",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bj-user",
+			"item": [
+				{
+					"name": "UserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-user/users/2",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-user",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserByName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-user/users/search?email=admin",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-user",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Renan\",\r\n    \"password\":\"123456\",\r\n    \"roles\":[\r\n        {\r\n            \"id\":1,\r\n            \"roleName\":\"JOGADOR\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-gateway}}/bj-user/users/save",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-user",
+								"users",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bj-carta",
+			"item": [
+				{
+					"name": "ListTodasCartas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-carta/carta",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-carta",
+								"carta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bj-partida",
+			"item": [
+				{
+					"name": "iniciaPartida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-partida/partida/iniciaPartida?nomePrimeiroJogador=Renan&nomeSegundoJogador=Ruan",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-partida",
+								"partida",
+								"iniciaPartida"
+							],
+							"query": [
+								{
+									"key": "nomePrimeiroJogador",
+									"value": "Renan"
+								},
+								{
+									"key": "nomeSegundoJogador",
+									"value": "Ruan"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscaPartida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-partida/partida/buscaPartida/1",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-partida",
+								"partida",
+								"buscaPartida",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PuxaCarta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/bj-partida/partida/puxaCarta/1/2",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"bj-partida",
+								"partida",
+								"puxaCarta",
+								"1",
+								"2"
+							],
+							"query": [
+								{
+									"key": "parou",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actuator refresh",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{api-gateway}}/bj-partida/actuator/refresh",
+					"host": [
+						"{{api-gateway}}"
+					],
+					"path": [
+						"bj-partida",
+						"actuator",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

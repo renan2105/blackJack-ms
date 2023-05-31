@@ -10,6 +10,8 @@ import com.renan.bjcarta.repositories.PartidaRepository;
 import com.renan.bjcarta.services.CartaService;
 import com.renan.bjcarta.services.JogadorService;
 import com.renan.bjcarta.services.PartidaService;
+import com.renan.bjcarta.services.exceptions.ResourceNotFoundException;
+import com.renan.bjcarta.services.exceptions.ValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,7 @@ public class PartidaServiceImpl implements PartidaService {
 
     public Partida buscaPartida(Long id){
 
-        return partidaRepository.findById(id).get();
+        return partidaRepository.findById(id).orElseThrow(() ->new ResourceNotFoundException("Partida com id : " + id));
 
     }
 
@@ -68,34 +70,21 @@ public class PartidaServiceImpl implements PartidaService {
         Partida partida = buscaPartida(partidaId);
         PartidaDTO partidaDTO = partidaToDTO(partida);
 
-//        fazer um tratamento de exceção aqui para caso tenham digitado id inexistente
-        Jogador jogadorAtual = partida.getJogadores().stream().filter(jogador -> jogador.getId().equals(jogadorId)).findFirst().get();
+        if(partida.getStatus().equals(StatusPartidaEnum.FINALIZADO)
+                || partida.getStatus().equals(StatusPartidaEnum.EMPATE)
+                || partida.getStatus().equals(StatusPartidaEnum.DERROTA)){
 
-        if(partida.getStatus().equals(StatusPartidaEnum.FINALIZADO)){
-            //criar retorno de partida finalizada e retorno com vitorioso
-            partidaDTO.setMensagem("Jogador " + partida.getVencedor().getNome() + " eh o vencedor parabeins!");
+            partidaDTO.setMensagem(escolheMensagem(partida, partida.getVencedor()));
             return partidaDTO;
         }
 
-        if(jogadorAtual.getStatus().equals(StatusJogadorEnum.ULTRAPASSOU)){
-            //criar retorno de partida que jogador ultrapassou o limite de carta
-            partidaDTO.setMensagem("Jogador " + jogadorAtual.getNome() + " ja ultrapassou os 21 pontos.");
-            return partidaDTO;
-        }
+        Jogador jogadorAtual = partida.getJogadores().stream().filter(jogador -> jogador.getId().equals(jogadorId))
+                .findFirst()
+                .orElseThrow(() ->new ResourceNotFoundException("Jogador com id : " + jogadorId));
 
-        if(jogadorAtual.getStatus().equals(StatusJogadorEnum.PAROU)){
-            //criar retorno de partida que jogador parou de jogar
-            partidaDTO.setMensagem("Jogador " + jogadorAtual.getNome() + " ja parou de puxar.");
-            return partidaDTO;
-        }
+        validaJogada(partida, jogadorAtual);
 
-        if(jogadorAtual.getRodada().equals(partida.getRodada())){
-            //criar retorno de partida que jogador ja jogou nesta rodada
-            partidaDTO.setMensagem("Jogador " + jogadorAtual.getNome() + " ja puxou esta rodada.");
-            return partidaDTO;
-        }
-
-        if(parou){
+        if(parou != null && parou){
             jogadorAtual.setStatus(StatusJogadorEnum.PAROU);
         } else {
 
@@ -118,23 +107,23 @@ public class PartidaServiceImpl implements PartidaService {
 
         }
 
-        boolean todosJogaram = true;
+        boolean passaRodada = true;
 
-        boolean NaoAJogadoresJogando = true;
+        boolean finalizaPartida = true;
 
         for(Jogador jogador : partida.getJogadores()){
 
             if(!jogador.getRodada().equals(partida.getRodada()))
-                todosJogaram = false;
+                passaRodada = false;
 
             if(jogador.getStatus().equals(StatusJogadorEnum.JOGANDO))
-                NaoAJogadoresJogando = false;
+                finalizaPartida = false;
         }
 
-        if(todosJogaram)
+        if(passaRodada)
             partida.setRodada(partida.getRodada() + 1);
 
-        if(NaoAJogadoresJogando)
+        if(finalizaPartida)
             partida.setStatus(StatusPartidaEnum.FINALIZADO);
 
         if(partida.getStatus().equals(StatusPartidaEnum.FINALIZADO) && partida.getVencedor() == null){
@@ -184,32 +173,55 @@ public class PartidaServiceImpl implements PartidaService {
         partida = savePartida(partida);
         partidaDTO = partidaToDTO(partida);
 
-        switch (partida.getStatus()){
-            case EMPATE:
-                partidaDTO.setMensagem("Empate");
-                break;
-            case DERROTA:
-                partidaDTO.setMensagem("Ninguem venceu.");
-                break;
-            case FINALIZADO:
-                partidaDTO.setMensagem("Jogador " + partidaDTO.getVencedor().getNome() + " eh o vencedor parabeins!");
-                break;
-            default:
-                if(jogadorAtual.getStatus().equals(StatusJogadorEnum.PAROU))
-                    partidaDTO.setMensagem("Jogador " + jogadorAtual.getNome() + " parou de puxar com a ponutacao de " + jogadorAtual.getPontuacao());
-                else
-                    partidaDTO.setMensagem("Jogador " + jogadorAtual.getNome() + " puxou e esta com " + jogadorAtual.getPontuacao() + " pontos.");
-        }
+        partidaDTO.setMensagem(escolheMensagem(partida, jogadorAtual));
 
         return partidaDTO;
 
     }
 
-    public PartidaDTO partidaToDTO(Partida partida){
+    private PartidaDTO partidaToDTO(Partida partida){
 
         return new PartidaDTO(partida.getId(), partida.getRodada(), partida.getJogadores(),
                 partida.getStatus(), partida.getVencedor(), null);
 
     }
 
+    private void validaJogada(Partida partida, Jogador jogador){
+
+        if(jogador.getStatus().equals(StatusJogadorEnum.ULTRAPASSOU)){
+            throw new ValidateException("Jogador " + jogador.getNome() + " ja ultrapassou os 21 pontos.");
+        }
+
+        if(jogador.getStatus().equals(StatusJogadorEnum.PAROU)){
+            throw new ValidateException("Jogador " + jogador.getNome() + " ja parou de puxar.");
+        }
+
+        if(jogador.getRodada().equals(partida.getRodada())){
+            throw new ValidateException("Jogador " + jogador.getNome() + " ja puxou esta rodada.");
+        }
+    }
+    
+    private String escolheMensagem(Partida partida, Jogador jogador){
+        
+        String mensagem;
+        
+        switch (partida.getStatus()){
+            case EMPATE:
+                mensagem = "Empate";
+                break;
+            case DERROTA:
+                mensagem = "Ninguem venceu.";
+                break;
+            case FINALIZADO:
+                mensagem = "Jogador " + partida.getVencedor().getNome() + " eh o vencedor parabeins!";
+                break;
+            default:
+                if(jogador.getStatus().equals(StatusJogadorEnum.PAROU))
+                    mensagem = "Jogador " + jogador.getNome() + " parou de puxar com a ponutacao de " + jogador.getPontuacao();
+                else
+                    mensagem = "Jogador " + jogador.getNome() + " puxou e esta com " + jogador.getPontuacao() + " pontos.";
+        }
+
+        return mensagem;
+    }
 }
