@@ -40,7 +40,8 @@ class PartidaControllerTest {
 
         Partida partidaEsperada = GeradorPartidaUtils.geraPartida();
 
-        Partida partida = partidaController.buscaPartida(1L).getBody();
+        Partida partida = partidaController.iniciaPartida("player",
+                "player2","player3","player4").getBody();
 
         Assertions.assertThat(partida).isNotNull();
         Assertions.assertThat(partida.getId()).isEqualTo(partidaEsperada.getId());

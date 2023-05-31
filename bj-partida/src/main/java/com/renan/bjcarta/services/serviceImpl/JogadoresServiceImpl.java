@@ -20,7 +20,6 @@ public class JogadoresServiceImpl implements JogadorService {
 
     public Set<Jogador> criaJogadores(List<String> nomeJogadores) {
 
-
         Set<Jogador> jogadores = new HashSet<>();
 
         for(String nomeJogador : nomeJogadores){
@@ -36,13 +35,12 @@ public class JogadoresServiceImpl implements JogadorService {
                 jogadores.add(saveJogador(jogador));
             }
 
-
         }
 
         return jogadores;
     }
 
-    public Jogador saveJogador(Jogador jogador){
+    private Jogador saveJogador(Jogador jogador){
 
         return jogadorRepository.save(jogador);
 
